@@ -1,0 +1,46 @@
+﻿<!--
+    View Imports sayesinde buna gerek yok
+
+    model MovieApp.Models.Movie
+
+    bu yeter;
+
+    model Movie
+-->
+@model Movie
+<!--
+    MODEL Değil ViewBag Kullansaydık Böyle Yapılıyordu
+     <div id="films">
+    <div class="film">
+        <p>ViewBag.FilmTitle</p>
+        <p>ViewBag.FilmDetail</p>
+        <p>ViewBag.FilmDirector</p>
+        <p>
+            <ul>
+               foreach(var item in ViewBag.Cast)
+        {
+                   <li>item</li>
+        }
+            </ul>
+        </p>
+    </div>
+</div>
+-->
+
+@section header{
+
+    @await Html.PartialAsync("_header")
+}
+
+@section scripts{ 
+    <script src="~/js/script.js"></script>
+}
+
+
+<h1>Film List</h1>
+
+<div id="films">
+
+    @await Html.PartialAsync("_movie", Model)
+
+</div>

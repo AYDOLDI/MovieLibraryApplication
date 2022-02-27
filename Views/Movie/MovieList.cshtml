@@ -1,0 +1,49 @@
+﻿<!--
+    View Imports sayesinde buna gerek yok;
+
+    model List<MovieApp.Models.Movie>
+
+    bu yeter;
+
+    model List<Movie>
+-->
+
+@model MovieGenreViewModel
+
+    <h1>MOVIE LIST</h1>
+    <div id="films">
+        @foreach (var movie in Model.Movies)
+        {
+            <!--
+            <div class="film">
+
+            <img src="/img/item.ImageURL" alt="item.Title" />
+            <p>item.Title</p>
+            <p>item.Details</p>
+            <p>item.Director</p>
+            <p>
+                <ul>
+                    foreach (var actor in item.Cast)
+                    {
+                        <li>actor</li>
+                    }
+                </ul>
+            </p>
+
+
+
+        </div>
+        -->
+
+
+            @await Html.PartialAsync("_movie", movie)
+        }
+    </div>
+
+@section menu{ 
+    @*@await Html.PartialAsync("_menu", Model.Genres)*@
+
+    @await Component.InvokeAsync("Genres");
+
+
+}
