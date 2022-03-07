@@ -8,42 +8,57 @@
     model List<Movie>
 -->
 
-@model MovieGenreViewModel
+@model MoviesViewModel
 
-    <h1>MOVIE LIST</h1>
-    <div id="films">
+<h1>MOVIE LIST</h1>
+<div id="films">
+
+    @if (Model.Movies.Count() > 0)
+    {
         @foreach (var movie in Model.Movies)
         {
             <!--
-            <div class="film">
+                <div class="film">
 
-            <img src="/img/item.ImageURL" alt="item.Title" />
-            <p>item.Title</p>
-            <p>item.Details</p>
-            <p>item.Director</p>
-            <p>
-                <ul>
-                    foreach (var actor in item.Cast)
-                    {
-                        <li>actor</li>
-                    }
-                </ul>
-            </p>
+                <img src="/img/item.ImageURL" alt="item.Title" />
+                <p>item.Title</p>
+                <p>item.Details</p>
+                <p>item.Director</p>
+                <p>
+                    <ul>
+                        foreach (var actor in item.Cast)
+                        {
+                            <li>actor</li>
+                        }
+                    </ul>
+                </p>
 
 
 
-        </div>
-        -->
+            </div>
+            -->
 
 
             @await Html.PartialAsync("_movie", movie)
         }
-    </div>
+    }
+    else
+    {
+        <div class="alert alert-dark" role="alert">
+            There is no movie in this category. We are working on it!
+        </div>
+    }
 
-@section menu{ 
+
+</div>
+
+@section menu{
     @*@await Html.PartialAsync("_menu", Model.Genres)*@
 
-    @await Component.InvokeAsync("Genres");
-
+    @await Component.InvokeAsync("Genres")
+    @*üst satıra koydugum noktali virgulu 1 saat aradık *@
+    @*üstteki satırı nereye eklersek ekleyelim kendi başına
+        calısacak cunku ilgili component icin gelen model bilgilerini
+        kendi icinde hazırlayıp kullanabiliyor*@
 
 }

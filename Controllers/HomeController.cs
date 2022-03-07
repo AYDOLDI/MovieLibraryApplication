@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MovieApp.Data;
 using MovieApp.Models;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,18 @@ namespace MovieApp.Controllers
     {
         public IActionResult Index()
         {
-           
-            string Title = "Film Title";
-            string Details = "Film Details";
-            string Director = "Film Director";
-            string[] Cast = {"Actor 1", "Actor 2", "Actor 3"};
+
+            var model = new HomePageViewModel
+            {
+                PopularMovies = MovieRepository.Movies
+            };
+
+            return View(model);
+
+            //string Title = "Film Title";
+            //string Details = "Film Details";
+            //string Director = "Film Director";
+            //string[] Cast = {"Actor 1", "Actor 2", "Actor 3"};
             //Üstteki veriler normalde DB üzerinden gelecek
 
             /*            
@@ -33,15 +41,15 @@ namespace MovieApp.Controllers
             */
 
 
-            var movie = new Movie();
+            //var movie = new Movie();
 
-            movie.Title = Title;
-            movie.Details = Details;
-            movie.Director = Director;
-            movie.Cast = Cast;
-            movie.ImageURL = "movie2.jpg";
+            //movie.Title = Title;
+            //movie.Details = Details;
+            //movie.Director = Director;
+            //movie.Cast = Cast;
+            //movie.ImageURL = "movie2.jpg";
 
-            return View(movie);
+            //return View(movie);
 
 
 
@@ -50,15 +58,19 @@ namespace MovieApp.Controllers
 
         public IActionResult About()
         {
-            var genrelist = new List<Genre>()
-            {
-                new Genre {Name = "Dram" },
-                new Genre {Name = "Action" },
-                new Genre {Name = "Romantic" },
-                new Genre {Name = "Comedy" }
-            };
+        //    var genrelist = new List<Genre>()
+        //    {
+        //        new Genre {Name = "Dram" },
+        //        new Genre {Name = "Action" },
+        //        new Genre {Name = "Romantic" },
+        //        new Genre {Name = "Comedy" }
+        //    };
 
-            return View(genrelist);
+            //return View(genrelist);
+
+
+            //üsttekileri artık componentle yapıyoz
+            return View();
         }
 
     }

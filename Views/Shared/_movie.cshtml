@@ -2,25 +2,15 @@
 
 
 
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="/img/@Model.ImageURL" class="img-fluid rounded-start" alt="@Model.Title">
+    <div class="card mb-3">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="/img/@Model.ImageURL"  alt="@Model.Title">
             </div>
             <div class="col-md-9">
                 <div class="card-body">
                     <h5 class="card-title">@Model.Title</h5>
-                    <p class="card-text">@Model.Details</p>
-                    <p class="card-text">@Model.Director</p>
-                    <p class="card-text">
-                        <ul>
-                            @foreach (var actor in Model.Cast)
-                            {
-                                <li>@actor</li>
-                            }
-
-                        </ul>
-                    </p>
+                    <a class="btn btn-dark" href="/Movie/Details/@Model.Id">Details</a>
                 </div>
             </div>
         </div>

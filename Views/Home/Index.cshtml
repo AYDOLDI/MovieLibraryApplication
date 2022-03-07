@@ -7,7 +7,7 @@
 
     model Movie
 -->
-@model Movie
+@model HomePageViewModel
 <!--
     MODEL Değil ViewBag Kullansaydık Böyle Yapılıyordu
      <div id="films">
@@ -40,7 +40,10 @@
 <h1>Film List</h1>
 
 <div id="films">
+    @foreach (var movie in Model.PopularMovies)
+    {
+        @await Html.PartialAsync("_movie", movie)
+    }
 
-    @await Html.PartialAsync("_movie", Model)
 
 </div>
