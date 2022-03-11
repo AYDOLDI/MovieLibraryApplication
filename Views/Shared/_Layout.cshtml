@@ -9,6 +9,7 @@
 </head>
 <body>
 
+    @RenderSection("message",false)
 
     @await Html.PartialAsync("_navbar")
     <!--async keywordu ile bittiği için partialasync asenkrondur, asenkron metotları kullanırken başında await ekleyerek kullanırız-->

@@ -1,0 +1,38 @@
+﻿@model Movie
+
+<h1>Create a Movie</h1>
+
+<hr />
+
+@*Tag helper = asp-for*@
+@*<form action="/movie/create" method="post">*@
+
+<form asp-controlller="Movie" asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Details"></label>
+        <textarea asp-for="Details" class="form-control"> textarea buymuş </textarea>
+        <span asp-validation-for="Details" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Director"></label>
+        <input asp-for="Director" class="form-control" />
+        <span asp-validation-for="Director" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageURL"></label>
+        <input asp-for="ImageURL" class="form-control" />
+        <span asp-validation-for="ImageURL" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GenreId"></label>
+        <input asp-for="GenreId" class="form-control" />
+        <span asp-validation-for="GenreId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+
+</form>

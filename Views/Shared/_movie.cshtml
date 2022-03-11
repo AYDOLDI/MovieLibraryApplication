@@ -2,16 +2,23 @@
 
 
 
-    <div class="card mb-3">
-        <div class="row">
-            <div class="col-md-3">
-                <img src="/img/@Model.ImageURL"  alt="@Model.Title">
-            </div>
-            <div class="col-md-9">
-                <div class="card-body">
-                    <h5 class="card-title">@Model.Title</h5>
-                    <a class="btn btn-dark" href="/Movie/Details/@Model.Id">Details</a>
-                </div>
+<div class="card mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="/img/@Model.ImageURL" alt="@Model.Title">
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Title</h5>
+                <a class="btn btn-dark" asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Id">Details</a>
+                <a class="btn btn-dark" asp-controller="Movie" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+               
+                <form asp-controller="Movie" asp-action="Delete" method="post" style="display:inline;">
+                    <input type="hidden" name="Title" value="@Model.Title" />
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     </div>
+</div>

@@ -13,7 +13,18 @@
                 <li class="nav-item active">
                     <a href="/movie/list" class="nav-link">Movies</a>
                 </li>
+                <li class="nav-item">
+                    <a href="/movie/create" class="nav-link">Create a Movie</a>
+                </li>
             </ul>
+            @*inline yan yana koydururken, form kontrol search bara iyi görünüm kazandırıyor*@
+            @*Kullanıcının submit ile gönderdiği formu action ile ilgili yere gönderiririz*@
+            @*list actiona contollera gelen parametreleri gonderiyoruz. name -> controllera isimm veriyormuşuz bir nevi*@
+            <form action="/movie/list" method="get" class="form-inline">
+                <input type="text" name="q" placeholder="Search a Movie" class="form-control mr-2"/>
+                <button type="submit" class="btn btn-outline-light mr-0"> Search</button>
+            </form>
+
         </div>
     </div>
 </nav>

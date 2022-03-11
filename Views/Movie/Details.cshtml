@@ -10,14 +10,20 @@
                     <h5 class="card-title">@Model.Title</h5>
                     <p class="card-text">@Model.Details</p>
                     <p class="card-text">@Model.Director</p>
-                    <p>
-                        <ul>
-                            @foreach (var item in Model.Cast)
-                            {
-                                <li>@item</li>
-                            }
-                        </ul>
-                    </p>
+                    @*@if (Model.Cast != null) { 
+                        <p>
+                            <ul>
+
+
+                                @foreach (var item in Model.Cast)
+                                {
+                                    <li>@item</li>
+                                }
+
+
+                            </ul>
+                        </p>
+                    }*@
                 </div>
             </div>
         </div>

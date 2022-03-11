@@ -1,4 +1,5 @@
-﻿using MovieApp.Models;
+﻿using MovieApp.Entity;
+using MovieApp.Models;
 using System.Collections.Generic;
 using System.Linq;
 
