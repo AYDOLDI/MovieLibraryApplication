@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MovieApp.Data;
 using MovieApp.Entity;
 using MovieApp.Models;
@@ -12,6 +13,12 @@ namespace MovieApp.Controllers
     public class MovieController : Controller
        {
 
+        //If it's private and readonly, the benefit is that
+        //you can't inadvertently change it from another part of
+        //that class after it is initialized. The readonly modifier
+        //ensures the field can only be given a value during its
+        //initialization or in its class constructor.
+        //constructordan sonra değişmesi gerekmiyor, o yüzden readonly
         private readonly MovieContext _context;
 
         public MovieController(MovieContext context)
@@ -58,22 +65,24 @@ namespace MovieApp.Controllers
             //var action = RouteData.Values["action"];
             //var genreid = RouteData.Values["id"];
 
-            var movies = MovieRepository.Movies;
+            //var movies = MovieRepository.Movies;
 
-            if (!string.IsNullOrEmpty(q))
-            {
-                movies = movies.Where(n => n.Title.ToLower().Contains(q.ToLower()) || n.Director.ToLower().Contains(q.ToLower())).ToList();
-            }
+            var movies = _context.Movies.AsQueryable();
 
 
             if (id != null)
             {
-                movies = movies.Where(m => m.GenreId == id).ToList();
+                movies = movies.Include(m => m.Genres).Where(m => m.Genres.Any(g =>g.Id==id));
+            }
+
+            if (!string.IsNullOrEmpty(q))
+            {
+                movies = movies.Where(n => n.Title.ToLower().Contains(q.ToLower()));
             }
 
             var model = new MoviesViewModel()
             {
-                Movies = movies
+                Movies = movies.ToList()
             };
 
             
@@ -86,14 +95,14 @@ namespace MovieApp.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            return View(MovieRepository.GetById(id));
+            return View(_context.Movies.Find(id));
         }
 
 
         [HttpGet]
         public IActionResult Create()
         {
-           
+            ViewBag.Genres = new SelectList(_context.Genres.ToList(), "GenreId", "Name");
             return View();
         }
 
@@ -117,11 +126,14 @@ namespace MovieApp.Controllers
                 //geliyor ise true döner
 
                 //MovieRepository.add(m);
+                _context.Movies.Add(m);
+                _context.SaveChanges();
                 
                 TempData["Message"] = $"The movie that name is {m.Title} has been created";
                 return RedirectToAction("List");
             }
 
+            ViewBag.Genres = new SelectList(_context.Genres.ToList(), "GenreId", "Name");
             return View();
             
         }
@@ -130,10 +142,9 @@ namespace MovieApp.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            //ViewBag.Genre = new SelectList(GenreRepository.Genres, "GenreId", "Name");
-            Movie m = MovieRepository.GetById(id);
+            ViewBag.Genres = new SelectList(_context.Genres.ToList(), "GenreId", "Name");
 
-            return View(m);
+            return View(_context.Movies.Find(id));
         }
 
         [HttpPost]
@@ -143,10 +154,13 @@ namespace MovieApp.Controllers
             {//movie içinden gelen alanlar kriterlerden geçmiş doğru şekilde
                 //geliyor ise true döner
 
-                MovieRepository.Edit(m);
+                //MovieRepository.Edit(m);
+
+                _context.Movies.Update(m);
+                _context.SaveChanges();
                 return RedirectToAction("Details", "Movie", new { @id = m.Id });
             }
-
+            ViewBag.Genres = new SelectList(_context.Genres.ToList(), "GenreId", "Name");
             return View(m);
            
             //oradaki new bir enourmous tip. bu sayede edite id bilgisi gönderiyoruz
@@ -155,7 +169,10 @@ namespace MovieApp.Controllers
 
         public IActionResult Delete(int id, string Title)
         {
-            MovieRepository.Delete(id);
+            //MovieRepository.Delete(id);
+            var entity = _context.Movies.Find(id);
+            _context.Movies.Remove(entity);
+            _context.SaveChanges();
             TempData["Message"] = $"The movie that name is {Title} has been deleted";
             return RedirectToAction("List");
         }
